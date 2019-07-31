@@ -47,7 +47,8 @@ namespace MvcPWx
             // Send the email.
             if (transportWeb != null)
             {
-                await transportWeb.DeliverAsync(myMessage);
+                try { transportWeb.DeliverAsync(myMessage); }
+                catch(Exception c) { Console.Write($"{c}"); }
             }
             else
             {

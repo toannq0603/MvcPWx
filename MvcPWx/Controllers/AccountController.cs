@@ -18,6 +18,8 @@ namespace MvcPWx.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
+
+
         public AccountController()
         {
         }
@@ -81,6 +83,9 @@ namespace MvcPWx.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+
+
+            ViewData["ReturnUrl"] = returnUrl;
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -96,7 +101,7 @@ namespace MvcPWx.Controllers
                     string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
 
                     // Uncomment to debug locally  
-                    // ViewBag.Link = callbackUrl;
+                    ViewBag.Link = callbackUrl;
                     ViewBag.errorMessage = "You must have a confirmed email to log on. "
                                          + "The confirmation token has been resent to your email account.";
                     return View("Error");
@@ -194,7 +199,7 @@ namespace MvcPWx.Controllers
                                     + "before you can log in.";
 
                     return View("Info");
-                    //return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
@@ -510,5 +515,7 @@ namespace MvcPWx.Controllers
             }
         }
         #endregion
+
+
     }
 }
